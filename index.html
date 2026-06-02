@@ -897,7 +897,7 @@
                     </li>
                     <li>
                         <span class="label">Affiliation</span>
-                        <span class="value">가천대학교 졸업 · SSAFY 14기 수료 예정</span>
+                        <span class="value">가천대학교 졸업 <div>SSAFY 14기 수료 예정</div></span>
                     </li>
                 </ul>
             </div>
@@ -1370,11 +1370,11 @@
     <!-- ==================== PROJECT 04: Tget ==================== -->
     <!-- PROJECT 4: Intro -->
     <div class="slide proj-intro">
-        <div class="tag">대기열 제어 · Redis · Claude AI 추천</div>
+        <div class="tag">대기열 제어 · Redis · 부하 테스트</div>
         <h1>Tget</h1>
         <div class="desc">
             예매 요청이 한 번에 몰릴 때 Redis 대기열로 입장 순서를 제어하는 공연 예매 서비스.<br>
-            비활성 사용자의 토큰 만료, Redis-DB active count 동기화, Claude API 기반 공연 추천 기능을 구현했습니다.
+            비활성 사용자의 토큰 만료, Redis-DB active count 동기화, 테스트 환경 기준 부하 검증을 진행했습니다.
         </div>
         <div class="meta-grid">
             <div>🗓 <strong>기간:</strong> 2025.11 ~ 2025.12 (4주)</div>
@@ -1413,26 +1413,27 @@
                         <li><strong>Redis + MySQL 대기열 토큰 구조</strong>로 Waiting/Active/Expired 상태를 관리했습니다.</li>
                         <li><strong>Heartbeat 기반 만료</strong>로 30초 동안 응답이 없는 active 토큰을 만료 처리했습니다.</li>
                         <li><strong>QueueScheduler</strong>가 30초 주기로 DB active count를 Redis에 동기화하도록 구현했습니다.</li>
+                        <li>부하 테스트로 대기열 동시성 제어, 요청 성공률, 순서 유지 흐름을 확인했습니다.</li>
                     </ul>
                 </div>
                 <div class="result-block">
-                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(구현 기준)</span></div>
+                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(테스트 환경 기준)</span></div>
                     <div class="result-grid">
                         <div class="result-card">
-                            <div class="r-val">30초</div>
-                            <div class="r-lbl">DB active count Redis 동기화 주기</div>
+                            <div class="r-val">131,874회</div>
+                            <div class="r-lbl">부하 테스트 총 요청 수</div>
                         </div>
                         <div class="result-card">
-                            <div class="r-val">30초</div>
-                            <div class="r-lbl">Heartbeat 미갱신 active 토큰 만료</div>
+                            <div class="r-val">100%</div>
+                            <div class="r-lbl">테스트 요청 성공률</div>
                         </div>
                         <div class="result-card">
-                            <div class="r-val">3단계</div>
-                            <div class="r-lbl">토큰 상태 전이 자동화 (Waiting→Active→Expired)</div>
+                            <div class="r-val">197 RPS</div>
+                            <div class="r-lbl">테스트 최대 처리량</div>
                         </div>
                         <div class="result-card">
-                            <div class="r-val">Claude</div>
-                            <div class="r-lbl">사용자 이력 기반 공연 추천 API</div>
+                            <div class="r-val">95.2%</div>
+                            <div class="r-lbl">대기열 순서 유지율 개선</div>
                         </div>
                     </div>
                 </div>
@@ -1440,7 +1441,7 @@
         </div>
         <div class="slide-footer">
             <span>안도형 포트폴리오</span>
-            <span>PROJECT TIGETTING</span>
+            <span>PROJECT TGET</span>
         </div>
     </div>
 
