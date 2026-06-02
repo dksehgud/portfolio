@@ -873,7 +873,7 @@
                     </div>
                     <div class="value-card blue">
                         <h4>Data · Client</h4>
-                        <p>MySQL · Redis / Redisson · ShedLock · TypeScript · Kotlin WebView</p>
+                        <p>MySQL · Redis / Redisson · ShedLock · TypeScript · REST API</p>
                     </div>
                 </div>
             </div>
@@ -996,16 +996,16 @@
             </div>
 
             <div class="tech-card">
-                <h3>Data &amp; Client <span class="en">Storage / UI / Mobile</span></h3>
+                <h3>Data &amp; Client <span class="en">Storage / UI / API</span></h3>
                 <div class="tech-tags">
                     <span class="tech-tag master">MySQL</span>
                     <span class="tech-tag master">Redis</span>
                     <span class="tech-tag">Redisson</span>
                     <span class="tech-tag">ShedLock</span>
                     <span class="tech-tag">TypeScript</span>
-                    <span class="tech-tag">Kotlin WebView</span>
+                    <span class="tech-tag">REST API</span>
                 </div>
-                <p class="tech-desc">Redis, Redisson, ShedLock으로 대기열, 동시성, 스케줄러 중복 실행 문제를 다뤘습니다. TypeScript로 S-Catch 진행률 UI를 구현했고, Kotlin WebView로 ReBloom 모바일 브릿지를 구현했습니다.</p>
+                <p class="tech-desc">Redis, Redisson, ShedLock으로 대기열, 동시성, 스케줄러 중복 실행 문제를 다뤘습니다. TypeScript로 S-Catch 진행률 UI를 구현했고, REST API로 프로젝트별 기능 흐름을 연결했습니다.</p>
             </div>
         </div>
         <div class="slide-footer">
@@ -1026,7 +1026,7 @@
                 <span class="num">01</span>
                 <span class="p-title"><a href="https://github.com/dksehgud/ReBloom" target="_blank" style="color: inherit; text-decoration: none;">ReBloom</a> <span class="award-mini">우수상</span></span>
                 <span class="p-desc">상담 이후 상태를 생체·대화 데이터로 추적하는 서비스</span>
-                <span class="p-tech">Spring Boot · EKS · Kafka · WebView</span>
+                <span class="p-tech">Spring Boot · EKS · Kafka · Redis</span>
             </div>
 
             <div class="trans-item">
@@ -1060,11 +1060,11 @@
     <!-- ==================== PROJECT 01: ReBloom ==================== -->
     <!-- PROJECT 1: Intro -->
     <div class="slide proj-intro">
-        <div class="tag">인프라 · 백엔드 코어 · 하이브리드 앱 브릿지</div>
+        <div class="tag">인프라 · 백엔드 코어 · 리포트 API</div>
         <h1>ReBloom</h1>
         <div class="desc">
             청소년의 상담 이후 상태를 생체 데이터와 대화 패턴으로 수집하고 추적하는 서비스.<br>
-            7개 MSA를 EKS에 배포하고 Kafka 이벤트 처리, Redis/ShedLock 스케줄러, Kotlin WebView Bridge를 구현했습니다.
+            7개 MSA를 EKS에 배포하고 인증/인가, 관계 관리 API, 리포트 API, Redis/ShedLock 스케줄러를 구현했습니다.
         </div>
         <div class="meta-grid">
             <div>🗓 <strong>기간:</strong> 2026.04 ~ 2026.05 (6주)</div>
@@ -1083,7 +1083,7 @@
             <img src="./architecture/rebloom.png" alt="ReBloom 시스템 아키텍처">
         </div>
         <div class="arch-caption">
-            <div class="left">EKS 기반 7개 MSA · <strong>Kafka</strong> 비동기 이벤트 스트리밍 · <strong>ShedLock + Redis</strong> 분산 스케줄링 · ArgoCD GitOps · Kotlin WebView 하이브리드 클라이언트</div>
+            <div class="left">EKS 기반 7개 MSA · <strong>Kafka</strong> 비동기 이벤트 스트리밍 · <strong>ShedLock + Redis</strong> 분산 스케줄링 · ArgoCD GitOps · 인증/관계/리포트 API</div>
             <div class="tags">
                 <span class="tag">AWS EKS</span>
                 <span class="tag">Kafka</span>
@@ -1110,7 +1110,7 @@
                 <div class="content-box bg-box">
                     <h3><span class="step-num">①</span>문제 정의</h3>
                     <p>
-                        여러 서비스가 EKS에서 동시에 실행되면서 스케줄러 중복 실행, 비동기 이벤트 추적, 모바일 WebView의 오프라인 저장과 센서 접근 처리가 필요했습니다.
+                        여러 서비스가 EKS에서 동시에 실행되면서 스케줄러 중복 실행, 비동기 이벤트 추적, 역할별 인증/인가와 관계 데이터 관리가 필요했습니다.
                     </p>
                 </div>
                 <div class="content-box">
@@ -1118,7 +1118,7 @@
                     <ul>
                         <li>Spring `@Scheduled`는 Pod마다 실행되어 같은 배치가 여러 번 돌 수 있음.</li>
                         <li>Kafka 비동기 처리 구간에서 요청 흐름을 추적할 공통 ID가 필요함.</li>
-                        <li>모바일 앱에서 웹 화면을 띄우는 과정에서 팝업, 뒤로가기, 로컬 저장 흐름을 별도로 보완해야 했습니다.</li>
+                        <li>자녀, 보호자, 상담사 역할에 따라 접근 가능한 API를 명확히 분리해야 했습니다.</li>
                     </ul>
                 </div>
             </div>
@@ -1129,7 +1129,7 @@
                     <ul>
                         <li><strong>ShedLock + Redis</strong>로 다중 Pod 환경의 스케줄러 중복 실행을 막는 구조를 구현했습니다.</li>
                         <li><strong>Kafka</strong> 메시지에 `correlationId`를 넣고 MDC에 연결해 로그 추적 흐름을 만들었습니다.</li>
-                        <li>Android WebView 설정과 Native Bridge를 보완해 앱 안에서 팝업, 뒤로가기, 로컬 저장 흐름이 자연스럽게 동작하도록 구현했습니다.</li>
+                        <li>Spring Security와 JWT 기반 권한 구조로 역할별 API 접근 흐름을 정리했습니다.</li>
                     </ul>
                 </div>
                 <div class="result-block">
