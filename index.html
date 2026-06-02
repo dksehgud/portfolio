@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안도형 — 백엔드 & 인프라 개발 포트폴리오</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap"
+          rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            color: #1e293b;
+            background: #f1f5f9;
+            line-height: 1.5;
+        }
+
+        .portfolio-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 0;
+            align-items: center;
+        }
+
+        .slide {
+            width: 1024px;
+            height: 724px; /* A4 가로 비율 규격 (1.414:1)에 근접 최적화, PDF 인쇄 시 1페이지씩 깔끔하게 정렬 */
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 50px 60px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* 공통 헤더 스타일 */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .slide-header .title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-header .title span.en {
+            font-family: 'Outfit';
+            font-weight: 300;
+            color: #3b82f6;
+            letter-spacing: 0.05em;
+        }
+
+        .slide-header .page-number {
+            font-family: 'Outfit';
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* Slide 1: Cover (수정된 표지) */
+        .cover {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #3b82f6 100%);
+            color: #ffffff;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 80px 100px;
+        }
+
+        .cover .subtitle {
+            font-family: 'Outfit';
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #3b82f6;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .cover .name {
+            font-size: 3.8rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.8rem;
+            line-height: 1.1;
+        }
+
+        .cover .job-title {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cover .job-title::after {
+            content: "";
+            display: inline-block;
+            width: 80px;
+            height: 2px;
+            background: #3b82f6;
+        }
+
+        .cover .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 30px;
+            font-size: 0.95rem;
+            color: #94a3b8;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 25px;
+            width: 100%;
+        }
+
+        .cover .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cover .contact-item strong {
+            color: #ffffff;
+            font-family: 'Outfit';
+            font-weight: 600;
+            width: 70px;
+        }
+
+        .cover .contact-item a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .cover .contact-item a:hover {
+            color: #3b82f6;
+        }
+
+        /* Slide 2: Introduction (자기소개) */
+        .introduce-body {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        .introduce-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .intro-quote {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #1e3a5f;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+            padding-left: 15px;
+        }
+
+        .intro-desc {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .intro-values {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .value-card {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px 20px;
+            border-left: 3px solid #64748b;
+        }
+
+        .value-card.blue {
+            border-left-color: #3b82f6;
+            background: #f0f7ff;
+        }
+
+        .value-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .value-card p {
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .introduce-right {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .profile-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .profile-list .label {
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .profile-list .value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        /* Slide 3: Education & Awards (학력 & 수상) */
+        .edu-awards-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        .edu-section, .awards-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #94a3b8;
+            border: 2px solid #ffffff;
+        }
+
+        .timeline-item.highlight::after {
+            background: #3b82f6;
+            width: 12px;
+            height: 12px;
+            left: -7px;
+        }
+
+        .timeline-item .date {
+            font-family: 'Outfit';
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .title-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .timeline-item .desc-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .badge-b {
+            display: inline-block;
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        /* Slide 4: Skills (기술 스택) */
+        .tech-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 20px;
+            flex-grow: 1;
+            align-items: center;
+        }
+
+        .tech-card {
+            height: 400px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .tech-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            border-left: 3px solid #3b82f6;
+            padding-left: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tech-card h3 span.en {
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .tech-tag:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            background: #f0f7ff;
+        }
+
+        .tech-tag.master {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .tech-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.6;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* Slide 5: Project Transition (어두운 배경의 전환 페이지) */
+        .project-transition {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 60%, #1e293b 100%);
+            color: #ffffff;
+            padding: 60px 80px;
+        }
+
+        .trans-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .trans-header h1 {
+            font-family: 'Outfit';
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .trans-header h1 span {
+            font-weight: 300;
+            color: #3b82f6;
+        }
+
+        .trans-header p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .trans-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .trans-item {
+            display: grid;
+            grid-template-columns: 0.6fr 2fr 4fr 1.5fr;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px 20px;
+            transition: all 0.2s;
+        }
+
+        .trans-item:hover {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateX(5px);
+        }
+
+        .trans-item .num {
+            font-family: 'Outfit';
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        .trans-item .p-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trans-item .p-desc {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        .trans-item .p-tech {
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: right;
+        }
+
+        .award-mini {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* Slide 6~: Project Detail Styles */
+        .proj-intro {
+            background: #ffffff;
+            color: #0f172a;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 80px;
+        }
+
+        .proj-intro .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .proj-intro h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .proj-intro .desc {
+            font-size: 1rem;
+            color: #475569;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+
+        .proj-intro .meta-grid {
+            display: flex;
+            gap: 30px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px 40px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .proj-intro .meta-grid strong {
+            color: #0f172a;
+        }
+
+        /* Project 상세 레이아웃 */
+        .proj-detail {
+            justify-content: space-between;
+        }
+
+        .detail-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .detail-left, .detail-right {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .content-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 18px 22px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .content-box.bg-box {
+            background: #f0f7ff;
+            border-left: 4px solid #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .content-box.bg-box h3 {
+            color: #1e3a5f;
+        }
+
+        .content-box h3 {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content-box h3::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        .content-box p, .content-box li {
+            font-size: 0.84rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .content-box ul {
+            padding-left: 15px;
+        }
+
+        .content-box li {
+            margin-bottom: 4px;
+        }
+
+        .table-solution {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin-top: 8px;
+        }
+
+        .table-solution th {
+            background: #f1f5f9;
+            padding: 6px 10px;
+            font-weight: 700;
+            color: #334155;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .table-solution td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+        }
+
+        .detail-highlight {
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-top: auto;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .result-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .result-card .r-val {
+            font-family: 'Outfit';
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .result-card .r-lbl {
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* Project detail compaction (PDF 1-page fit, 4-card grids) */
+        .proj-detail .detail-body { gap: 16px; }
+        .proj-detail .detail-left, .proj-detail .detail-right { gap: 11px; }
+        .proj-detail .content-box { padding: 13px 17px; }
+        .proj-detail .content-box h3 { margin-bottom: 8px; font-size: 1.05rem; }
+        .proj-detail .content-box p, .proj-detail .content-box li { font-size: 0.87rem; line-height: 1.5; }
+        .proj-detail .content-box li { margin-bottom: 4px; }
+        .proj-detail .table-solution { font-size: 0.82rem; margin-top: 6px; }
+        .proj-detail .table-solution th, .proj-detail .table-solution td { padding: 5px 9px; }
+        .proj-detail .result-grid { gap: 8px; }
+        .proj-detail .result-card { padding: 9px 12px; text-align: left; display: flex; align-items: baseline; gap: 9px; }
+        .proj-detail .result-card .r-val { font-size: 1.15rem; white-space: nowrap; }
+        .proj-detail .result-card .r-lbl { margin-top: 0; font-size: 0.75rem; line-height: 1.35; }
+        .proj-detail .detail-highlight { padding: 12px 18px; font-size: 0.84rem; margin-top: 4px; }
+        .proj-detail .result-block { display: flex; flex-direction: column; gap: 8px; }
+        .proj-detail .result-title { font-size: 1.06rem; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .proj-detail .result-title::before { content: ""; display: inline-block; width: 4px; height: 12px; background: #3b82f6; border-radius: 2px; }
+        .proj-detail .step-num { color: #3b82f6; font-family: 'Outfit'; font-weight: 800; margin-right: 2px; }
+
+        /* Intro / Competencies / Transition compaction (PDF 1-page fit) */
+        .intro-quote { margin-bottom: 14px; }
+        .intro-desc { margin-bottom: 16px; }
+        .intro-values { gap: 10px; }
+        .value-card { padding: 10px 16px; }
+        .value-card p { font-size: 0.82rem; }
+        .profile-list { gap: 14px; }
+        .tech-body { gap: 14px; }
+        .tech-card { padding: 13px 16px; gap: 20px; }
+        .tech-card h3 { font-size: 1rem; }
+        .tech-tags { gap: 6px; }
+        .tech-tag { padding: 4px 10px; font-size: 0.78rem; }
+        .tech-desc { font-size: 0.75rem; line-height: 1.42; }
+        .trans-list { gap: 12px; }
+        .trans-item { padding: 10px 20px; }
+
+        /* Architecture slide (시스템 아키텍처) */
+        .arch-canvas {
+            flex-grow: 1;
+            min-height: 0;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .arch-canvas img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .arch-caption {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .arch-caption .left {
+            font-size: 0.84rem;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        .arch-caption .left strong {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .arch-caption .tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .arch-caption .tag {
+            font-family: 'Outfit';
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #1e40af;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .arch-caption .tag.alt {
+            color: #334155;
+            background: #ffffff;
+            border-color: #cbd5e1;
+        }
+
+        /* Footer */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+            margin-top: 20px;
+        }
+
+        /* Print (A4 가로) */
+        @media print {
+            @page { size: A4 landscape; margin: 0; }
+            html, body { background: #ffffff; }
+            .portfolio-container { padding: 0; gap: 0; }
+            .slide {
+                box-shadow: none;
+                zoom: 1.0962;
+                page-break-after: always;
+                break-after: page;
+            }
+            .slide:last-child { page-break-after: auto; break-after: auto; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="portfolio-container">
+
+    <!-- SLIDE 1: Cover (표지) -->
+    <div class="slide cover">
+        <div class="subtitle">Developer Portfolio</div>
+        <div class="name">안 도 형</div>
+        <div class="job-title">Backend &amp; Infrastructure Engineer</div>
+        <div class="contact-grid">
+            <div class="contact-item"><strong>EMAIL</strong>dksehgud1@naver.com</div>
+            <div class="contact-item"><strong>PHONE</strong>010-2613-3584</div>
+            <div class="contact-item"><strong>GITHUB</strong><a href="https://github.com/dksehgud" target="_blank">github.com/dksehgud</a>
+            </div>
+            <div class="contact-item"><strong>AWARDS</strong>삼성전자 SW 역량테스트 B형 보유</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Introduction (자기소개) -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">01. INTRODUCTION</span> 자기소개</div>
+            <div class="page-number">PAGE 02</div>
+        </div>
+        <div class="introduce-body">
+            <div class="introduce-left">
+                <div>
+                    <div class="intro-quote">
+                        "백엔드 API와 배포 인프라를 함께 구현해<br>서비스가 안정적으로 동작하게 만드는 개발자"
+                    </div>
+                    <p class="intro-desc">
+                        기능 구현에서 끝내지 않고 배포, 로그 추적, 데이터 정합성까지 함께 확인합니다.
+                        문제가 생기면 로그와 지표로 원인을 좁히고, 다시 같은 문제가 반복되지 않도록 구조를 고치는 개발자가 되고 싶습니다.
+                    </p>
+                </div>
+                <div class="intro-values">
+                    <div class="value-card blue">
+                        <h4>Back-End</h4>
+                        <p>Spring Boot 3 · Spring Security · FastAPI · JPA / MyBatis</p>
+                    </div>
+                    <div class="value-card blue">
+                        <h4>Infra · DevOps</h4>
+                        <p>Docker · Nginx · GitLab CI/CD · AWS EKS · ArgoCD · Kafka</p>
+                    </div>
+                    <div class="value-card blue">
+                        <h4>Data · Client</h4>
+                        <p>MySQL · Redis / Redisson · ShedLock · TypeScript · Kotlin WebView</p>
+                    </div>
+                </div>
+            </div>
+            <div class="introduce-right">
+                <ul class="profile-list">
+                    <li>
+                        <span class="label">Name</span>
+                        <span class="value">안도형 (Ahn Do-hyung)</span>
+                    </li>
+                    <li>
+                        <span class="label">Role Focus</span>
+                        <span class="value">Backend / Infra</span>
+                    </li>
+                    <li>
+                        <span class="label">Core Stack</span>
+                        <span class="value">Java · Spring Boot · Python/FastAPI · TypeScript · AWS</span>
+                    </li>
+                    <li>
+                        <span class="label">Certification</span>
+                        <span class="value">삼성전자 SW 역량테스트 B형</span>
+                    </li>
+                    <li>
+                        <span class="label">Affiliation</span>
+                        <span class="value">가천대학교 졸업 · SSAFY 14기 수료 예정</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>INTRODUCTION</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Education & Awards (학력 및 수상) -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">02. EDUCATION &amp; AWARDS</span> 학력 및 수상</div>
+            <div class="page-number">PAGE 03</div>
+        </div>
+        <div class="edu-awards-body">
+            <div class="edu-section">
+                <div class="section-subtitle">EDUCATION</div>
+
+                <div class="timeline-item highlight">
+                    <div class="date">2025.07 ~ 2026.06</div>
+                    <div class="title-text">삼성 청년 SW 아카데미 (SSAFY)</div>
+                    <div class="desc-text">Java/Python 기반 백엔드 및 클라우드 아키텍처 과정 수료 예정</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2025.02</div>
+                    <div class="title-text">가천대학교 컴퓨터공학과 학사 졸업</div>
+                </div>
+            </div>
+
+            <div class="awards-section">
+                <div class="section-subtitle">AWARDS &amp; CERTIFICATIONS</div>
+
+                <div class="timeline-item highlight">
+                    <div class="date">2026.04</div>
+                    <div class="title-text">삼성전자 SW 역량테스트 B형 취득</div>
+                    <div class="desc-text">C++/Java 기반 고성능 자료구조 구현 및 최적화 역량 검증</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2026.05</div>
+                    <div class="title-text">우수상 — ReBloom 프로젝트</div>
+                    <div class="desc-text">ReBloom (청소년 정신건강 사후 추적관리 서비스)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2026.04</div>
+                    <div class="title-text">우수상 — 삼성전자 DX부문 기업 협력 프로젝트</div>
+                    <div class="desc-text">S-Catch (AI 적응형 글로벌 웹 크롤링 서비스)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2026.02</div>
+                    <div class="title-text">우수상 — SSAFY 자율 프로젝트</div>
+                    <div class="desc-text">RE:FIT (AI 가상 피팅 중고 공유 플랫폼 - 인프라 전담)</div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>EDUCATION &amp; AWARDS</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Skills (기술 스택) -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">03. SKILLS</span> 기술 스택</div>
+            <div class="page-number">PAGE 04</div>
+        </div>
+        <div class="tech-body">
+            <div class="tech-card">
+                <h3>Back-End <span class="en">API &amp; Business Logic</span></h3>
+                <div class="tech-tags">
+                    <span class="tech-tag master">Spring Boot 3.x</span>
+                    <span class="tech-tag master">FastAPI</span>
+                    <span class="tech-tag">Spring Security</span>
+                    <span class="tech-tag">JPA / MyBatis</span>
+                    <span class="tech-tag">Kafka</span>
+                </div>
+                    <p class="tech-desc">Spring Boot로 REST API, 인증/인가, 스케줄러, 비동기 처리, 예외 처리 구조를 구현했습니다. FastAPI로 S-Catch의 크롤링 작업 생성, 상태 조회, 결과 비교 API를 구현했습니다.</p>
+            </div>
+
+            <div class="tech-card">
+                <h3>Infra &amp; DevOps <span class="en">Cloud &amp; Pipeline</span></h3>
+                <div class="tech-tags">
+                    <span class="tech-tag master">Docker</span>
+                    <span class="tech-tag master">Nginx</span>
+                    <span class="tech-tag">AWS EKS</span>
+                    <span class="tech-tag">ArgoCD</span>
+                    <span class="tech-tag">GitLab CI/CD</span>
+                </div>
+                    <p class="tech-desc">Docker, Nginx, GitLab CI/CD로 RE:FIT 배포 자동화를 구현했습니다. AWS EKS와 ArgoCD로 ReBloom 7개 MSA 서비스를 배포하고 운영 지표를 확인했습니다.</p>
+            </div>
+
+            <div class="tech-card">
+                <h3>Data &amp; Client <span class="en">Storage / UI / Mobile</span></h3>
+                <div class="tech-tags">
+                    <span class="tech-tag master">MySQL</span>
+                    <span class="tech-tag master">Redis</span>
+                    <span class="tech-tag">Redisson</span>
+                    <span class="tech-tag">ShedLock</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Kotlin WebView</span>
+                </div>
+                <p class="tech-desc">Redis, Redisson, ShedLock으로 대기열, 동시성, 스케줄러 중복 실행 문제를 다뤘습니다. TypeScript로 S-Catch 진행률 UI를 구현했고, Kotlin WebView로 ReBloom 모바일 브릿지를 구현했습니다.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>SKILLS</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Project Transition (프로젝트 목록 - 전환 페이지) -->
+    <div class="slide project-transition">
+        <div class="trans-header">
+            <h1>PROJECTS <span>LIST</span></h1>
+            <p>총 4개의 프로젝트 상세 내역</p>
+        </div>
+        <div class="trans-list">
+
+            <div class="trans-item">
+                <span class="num">01</span>
+                <span class="p-title">ReBloom <span class="award-mini">우수상</span></span>
+                <span class="p-desc">상담 이후 상태를 생체·대화 데이터로 추적하는 서비스</span>
+                <span class="p-tech">Spring Boot · EKS · Kafka · WebView</span>
+            </div>
+
+            <div class="trans-item">
+                <span class="num">02</span>
+                <span class="p-title">S-Catch <span class="award-mini">우수상</span></span>
+                <span class="p-desc">91개국 삼성닷컴 상품 정보를 수집·비교하는 크롤링 서비스</span>
+                <span class="p-tech">FastAPI · TypeScript · Playwright · SSE</span>
+            </div>
+
+            <div class="trans-item">
+                <span class="num">03</span>
+                <span class="p-title">RE:FIT <span class="award-mini">우수상</span></span>
+                <span class="p-desc">중고 의류 거래 서비스의 배포와 CI/CD를 구축한 프로젝트</span>
+                <span class="p-tech">Spring Boot · Docker · Blue/Green</span>
+            </div>
+
+            <div class="trans-item">
+                <span class="num">04</span>
+                <span class="p-title">Tget</span>
+                <span class="p-desc">Redis 대기열로 예매 진입 순서를 제어한 공연 예매 서비스</span>
+                <span class="p-tech">Spring Boot 3 · Redis · MyBatis · Claude</span>
+            </div>
+
+        </div>
+        <div class="slide-footer" style="border-top-color: rgba(255,255,255,0.1);">
+            <span style="color: #64748b;">안도형 포트폴리오</span>
+            <span style="color: #64748b;">PROJECTS OVERVIEW</span>
+        </div>
+    </div>
+
+    <!-- ==================== PROJECT 01: ReBloom ==================== -->
+    <!-- PROJECT 1: Intro -->
+    <div class="slide proj-intro">
+        <div class="tag">인프라 · 백엔드 코어 · 하이브리드 앱 브릿지</div>
+        <h1>ReBloom</h1>
+        <div class="desc">
+            청소년의 상담 이후 상태를 생체 데이터와 대화 패턴으로 수집하고 추적하는 서비스.<br>
+            7개 MSA를 EKS에 배포하고 Kafka 이벤트 처리, Redis/ShedLock 스케줄러, Kotlin WebView Bridge를 구현했습니다.
+        </div>
+        <div class="meta-grid">
+            <div>🗓 <strong>기간:</strong> 2026.04 ~ 2026.05 (6주)</div>
+            <div>👥 <strong>팀 구성:</strong> 6명 (BE 2, FE 2, AI 2)</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 1: Architecture -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">01. ReBloom</span> 시스템 아키텍처</div>
+            <div class="page-number">PAGE 07</div>
+        </div>
+        <div class="arch-canvas">
+            <img src="./architecture/rebloom.png" alt="ReBloom 시스템 아키텍처">
+        </div>
+        <div class="arch-caption">
+            <div class="left">EKS 기반 7개 MSA · <strong>Kafka</strong> 비동기 이벤트 스트리밍 · <strong>ShedLock + Redis</strong> 분산 스케줄링 · ArgoCD GitOps · Kotlin WebView 하이브리드 클라이언트</div>
+            <div class="tags">
+                <span class="tag">AWS EKS</span>
+                <span class="tag">Kafka</span>
+                <span class="tag">ArgoCD</span>
+                <span class="tag alt">MySQL</span>
+                <span class="tag alt">Redis</span>
+                <span class="tag alt">FastAPI</span>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT REBLOOM · ARCHITECTURE</span>
+        </div>
+    </div>
+
+    <!-- PROJECT 1: Detail -->
+    <div class="slide proj-detail">
+        <div class="slide-header">
+            <div class="title"><span class="en">01. ReBloom</span> 문제 해결 및 성과</div>
+            <div class="page-number">PAGE 08</div>
+        </div>
+        <div class="detail-body">
+            <div class="detail-left">
+                <div class="content-box bg-box">
+                    <h3><span class="step-num">①</span>문제 정의</h3>
+                    <p>
+                        여러 서비스가 EKS에서 동시에 실행되면서 스케줄러 중복 실행, 비동기 이벤트 추적, 모바일 WebView의 오프라인 저장과 센서 접근 처리가 필요했습니다.
+                    </p>
+                </div>
+                <div class="content-box">
+                    <h3><span class="step-num">②</span>문제 원인</h3>
+                    <ul>
+                        <li>Spring `@Scheduled`는 Pod마다 실행되어 같은 배치가 여러 번 돌 수 있음.</li>
+                        <li>Kafka 비동기 처리 구간에서 요청 흐름을 추적할 공통 ID가 필요함.</li>
+                        <li>모바일 앱에서 웹 화면을 띄우는 과정에서 팝업, 뒤로가기, 로컬 저장 흐름을 별도로 보완해야 했습니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-right">
+                <div class="content-box">
+                    <h3><span class="step-num">③</span>해결 과정</h3>
+                    <ul>
+                        <li><strong>ShedLock + Redis</strong>로 다중 Pod 환경의 스케줄러 중복 실행을 막는 구조를 구현했습니다.</li>
+                        <li><strong>Kafka</strong> 메시지에 `correlationId`를 넣고 MDC에 연결해 로그 추적 흐름을 만들었습니다.</li>
+                        <li>Android WebView 설정과 Native Bridge를 보완해 앱 안에서 팝업, 뒤로가기, 로컬 저장 흐름이 자연스럽게 동작하도록 구현했습니다.</li>
+                    </ul>
+                </div>
+                <div class="result-block">
+                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(AWS · GitLab 실측 기준)</span></div>
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="r-val">7/7</div>
+                            <div class="r-lbl">EKS 7개 MSA Pod Running (재시작 0회)</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">7,558건</div>
+                            <div class="r-lbl">ALB 누적 요청 · 평균 TargetResponseTime 41ms</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">318K건</div>
+                            <div class="r-lbl">CloudWatch 로그 이벤트 (1주 운영 추적)</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">Synced</div>
+                            <div class="r-lbl">ArgoCD GitOps · Image Updater 7개 이미지</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT REBLOOM</span>
+        </div>
+    </div>
+
+    <!-- ==================== PROJECT 02: S-Catch ==================== -->
+    <!-- PROJECT 2: Intro -->
+    <div class="slide proj-intro">
+        <div class="tag">FastAPI · TypeScript · Playwright · SSE</div>
+        <h1>S-Catch</h1>
+        <div class="desc">
+            삼성닷컴 91개국 상품 페이지에서 TV 스펙 정보를 수집하고 기준 데이터와 비교하는 서비스.<br>
+            국가별 사이트 구조를 3유형으로 나누고 FastAPI, TypeScript, Playwright, SSE로 수집 진행과 결과 비교를 구현했습니다.
+        </div>
+        <div class="meta-grid">
+            <div>🗓 <strong>기간:</strong> 2026.02 ~ 2026.04 (6주)</div>
+            <div>👥 <strong>팀 구성:</strong> 6명</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 2: Architecture -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">02. S-Catch</span> 시스템 아키텍처</div>
+            <div class="page-number">PAGE 10</div>
+        </div>
+        <div class="arch-canvas">
+            <img src="./architecture/s-catch.png" alt="S-Catch 시스템 아키텍처">
+        </div>
+        <div class="arch-caption">
+            <div class="left"><strong>FastAPI + TypeScript</strong> 작업 관리 UI · <strong>Playwright</strong> 수집 엔진 · SSE 실시간 진행률 · 기준 데이터 Diff 비교 · 91개국 구조 테스트</div>
+            <div class="tags">
+                <span class="tag">FastAPI</span>
+                <span class="tag">Playwright</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag alt">SSE</span>
+                <span class="tag alt">Diff API</span>
+                <span class="tag alt">Job State</span>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT S-CATCH · ARCHITECTURE</span>
+        </div>
+    </div>
+
+    <!-- PROJECT 2: Detail -->
+    <div class="slide proj-detail">
+        <div class="slide-header">
+            <div class="title"><span class="en">02. S-Catch</span> 문제 해결 및 성과</div>
+            <div class="page-number">PAGE 11</div>
+        </div>
+        <div class="detail-body">
+            <div class="detail-left">
+                <div class="content-box bg-box">
+                    <h3><span class="step-num">①</span>문제 정의</h3>
+                    <p>
+                        국가마다 삼성닷컴 상품 목록과 상세 페이지 구조가 달라 수집 코드가 쉽게 깨졌고, 오래 걸리는 크롤링 작업의 진행 상태를 화면에서 확인하기 어려웠습니다.
+                    </p>
+                </div>
+                <div class="content-box">
+                    <h3><span class="step-num">②</span>문제 원인</h3>
+                    <ul>
+                        <li>91개국 사이트가 한국형·미국형·기타 지역형으로 나뉘어 DOM/API 구조가 달랐음.</li>
+                        <li>수집 시간이 길어 사용자가 현재 단계와 실패 여부를 확인하기 어려웠음.</li>
+                        <li>SSE 연결이 끊기거나 서버가 재시작되면 작업 상태가 어긋날 수 있었음.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-right">
+                <div class="content-box">
+                    <h3><span class="step-num">③</span>해결 과정</h3>
+                    <ul>
+                        <li><strong>Playwright 기반 수집 흐름</strong>을 공통화하고, 국가별 구조 차이는 3유형으로 나누어 처리했습니다.</li>
+                        <li>작업 상태를 저장하고 SSE로 진행률을 보내 재접속 시에도 화면 상태를 복구했습니다.</li>
+                        <li>기준 데이터와 수집 결과를 비교해 matched/mismatched/missing/unexpected로 분류했습니다.</li>
+                    </ul>
+                </div>
+                <div class="result-block">
+                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(구현 기준)</span></div>
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="r-val">6개 API</div>
+                            <div class="r-lbl">작업 생성·상태 조회·SSE·결과 비교 API</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">4분류</div>
+                            <div class="r-lbl">수집 결과 비교 기준</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">3유형</div>
+                            <div class="r-lbl">한국형·미국형·기타 지역형 구조 대응</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">91개국</div>
+                            <div class="r-lbl">글로벌 대상국 수집 흐름 테스트</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT S-CATCH</span>
+        </div>
+    </div>
+
+    <!-- ==================== PROJECT 03: RE:FIT ==================== -->
+    <!-- PROJECT 3: Intro -->
+    <div class="slide proj-intro">
+        <div class="tag">Blue/Green 배포 자동화 · CI/CD · Docker · Nginx</div>
+        <h1>RE:FIT</h1>
+        <div class="desc">
+            AI 가상 피팅과 중고 의류 거래 기능을 제공하는 플랫폼.<br>
+            Backend·Frontend·AI 서버를 Docker로 컨테이너화하고, GitLab CI/CD와 Nginx Blue/Green 기반 배포 자동화를 구현했습니다. 총 532회 파이프라인과 205회 배포 작업을 운영하며 2월 기준 파이프라인 성공률을 87.0%까지 안정화했습니다.
+        </div>
+        <div class="meta-grid">
+            <div>🗓 <strong>기간:</strong> 2026.01 ~ 2026.02 (6주)</div>
+            <div>👥 <strong>팀 구성:</strong> 6명</div>
+            <div>🔗 <strong>GitHub:</strong> <a href="https://github.com/dksehgud" target="_blank" style="color: #2563eb; text-decoration: none;">github.com/dksehgud</a></div>
+        </div>
+    </div>
+
+    <!-- PROJECT 3: Architecture -->
+    <div class="slide">
+        <div class="slide-header">
+            <div class="title"><span class="en">03. RE:FIT</span> 시스템 아키텍처</div>
+            <div class="page-number">PAGE 13</div>
+        </div>
+        <div class="arch-canvas">
+            <img src="./architecture/refit.png" alt="RE:FIT 시스템 아키텍처">
+        </div>
+        <div class="arch-caption">
+            <div class="left"><strong>Nginx Blue/Green</strong> 배포 자동화 · Docker Compose 환경 분리 · GitLab CI/CD · <strong>Redisson</strong> 분산 락 · Redis 입찰 검증</div>
+            <div class="tags">
+                <span class="tag">Docker</span>
+                <span class="tag">Nginx</span>
+                <span class="tag">GitLab CI/CD</span>
+                <span class="tag alt">Redisson</span>
+                <span class="tag alt">Redis</span>
+                <span class="tag alt">MySQL</span>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT RE:FIT · ARCHITECTURE</span>
+        </div>
+    </div>
+
+    <!-- PROJECT 3: Detail -->
+    <div class="slide proj-detail">
+        <div class="slide-header">
+            <div class="title"><span class="en">03. RE:FIT</span> 문제 해결 및 성과</div>
+            <div class="page-number">PAGE 14</div>
+        </div>
+        <div class="detail-body">
+            <div class="detail-left">
+                <div class="content-box bg-box">
+                    <h3><span class="step-num">①</span>문제 정의</h3>
+                    <p>
+                        배포 때마다 서버가 재시작되면 실시간 경매/채팅 세션이 끊길 수 있었고, AI 서버 호출과 동시 입찰 처리에서 병목과 정합성 문제가 발생할 수 있었습니다. CI 빌드도 반복 실행되며 시간이 길어졌습니다.
+                    </p>
+                </div>
+                <div class="content-box">
+                    <h3><span class="step-num">②</span>문제 원인</h3>
+                    <ul>
+                        <li>단일 환경 배포라 새 버전을 띄우는 동안 기존 서비스가 영향을 받음.</li>
+                        <li>동시 입찰과 AI 호출이 몰리면 스레드풀과 데이터 정합성 관리가 필요함.</li>
+                        <li>매 빌드마다 의존성을 다시 내려받아 CI 시간이 길어짐.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-right">
+                <div class="content-box">
+                    <h3><span class="step-num">③</span>해결 과정</h3>
+                    <ul>
+                        <li><strong>Nginx Blue/Green 배포 자동화</strong>로 새 버전을 별도 컨테이너에서 실행한 뒤 설정을 갱신했습니다.</li>
+                        <li><strong>Redisson 분산 락</strong>과 Redis Sorted Set으로 동시 입찰 검증 흐름을 구현했습니다.</li>
+                        <li>GitLab <strong>의존성 캐싱</strong>, `rules:changes`, 가상 DB 테스트 환경으로 CI 흐름을 정리했습니다.</li>
+                    </ul>
+                </div>
+                <div class="result-block">
+                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(GitLab API 실측 기준)</span></div>
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="r-val">532회</div>
+                            <div class="r-lbl">GitLab 파이프라인 총 실행</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">205회</div>
+                            <div class="r-lbl">Blue/Green 배포 작업 실행</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">87.0%</div>
+                            <div class="r-lbl">2월 파이프라인 성공률 (안정화)</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">83.1초</div>
+                            <div class="r-lbl">성공 배포 소요 중앙값</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT RE:FIT</span>
+        </div>
+    </div>
+
+    <!-- ==================== PROJECT 04: Tget ==================== -->
+    <!-- PROJECT 4: Intro -->
+    <div class="slide proj-intro">
+        <div class="tag">대기열 제어 · Redis · Claude AI 추천</div>
+        <h1>Tget</h1>
+        <div class="desc">
+            예매 요청이 한 번에 몰릴 때 Redis 대기열로 입장 순서를 제어하는 공연 예매 서비스.<br>
+            비활성 사용자의 토큰 만료, Redis-DB active count 동기화, Claude API 기반 공연 추천 기능을 구현했습니다.
+        </div>
+        <div class="meta-grid">
+            <div>🗓 <strong>기간:</strong> 2025.11 ~ 2025.12 (4주)</div>
+            <div>👥 <strong>팀 구성:</strong> 2명 (BE 1, FE 1)</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 4: Detail -->
+    <div class="slide proj-detail">
+        <div class="slide-header">
+            <div class="title"><span class="en">04. Tget</span> 문제 해결 및 성과</div>
+            <div class="page-number">PAGE 16</div>
+        </div>
+        <div class="detail-body">
+            <div class="detail-left">
+                <div class="content-box bg-box">
+                    <h3><span class="step-num">①</span>문제 정의</h3>
+                    <p>
+                        예매 오픈 시 요청이 한 번에 DB로 들어오면 커넥션이 부족해지고, 사용자가 이탈해도 active 토큰이 남아 다음 사용자의 진입이 늦어질 수 있었습니다.
+                    </p>
+                </div>
+                <div class="content-box">
+                    <h3><span class="step-num">②</span>문제 원인</h3>
+                    <ul>
+                        <li>예매 요청이 완충 없이 DB로 직접 유입되어 커넥션 부담이 커짐.</li>
+                        <li>서버 재시작 시 Redis active count는 초기화되나 DB 상태는 유지 → 정합성 불일치.</li>
+                        <li>이탈 사용자를 감지하지 못하면 active 토큰이 계속 남음.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-right">
+                <div class="content-box">
+                    <h3><span class="step-num">③</span>해결 과정</h3>
+                    <ul>
+                        <li><strong>Redis + MySQL 대기열 토큰 구조</strong>로 Waiting/Active/Expired 상태를 관리했습니다.</li>
+                        <li><strong>Heartbeat 기반 만료</strong>로 30초 동안 응답이 없는 active 토큰을 만료 처리했습니다.</li>
+                        <li><strong>QueueScheduler</strong>가 30초 주기로 DB active count를 Redis에 동기화하도록 구현했습니다.</li>
+                    </ul>
+                </div>
+                <div class="result-block">
+                    <div class="result-title"><span class="step-num">④</span>결과 <span style="font-size:0.7rem;font-weight:500;color:#94a3b8;">(구현 기준)</span></div>
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="r-val">30초</div>
+                            <div class="r-lbl">DB active count Redis 동기화 주기</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">30초</div>
+                            <div class="r-lbl">Heartbeat 미갱신 active 토큰 만료</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">3단계</div>
+                            <div class="r-lbl">토큰 상태 전이 자동화 (Waiting→Active→Expired)</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-val">Claude</div>
+                            <div class="r-lbl">사용자 이력 기반 공연 추천 API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>안도형 포트폴리오</span>
+            <span>PROJECT TIGETTING</span>
+        </div>
+    </div>
+
+
+    <!-- End Slide -->
+    <div class="slide"
+         style="display:flex;align-items:center;justify-content:center;background:#0f172a;color:#ffffff;text-align:center;">
+        <div>
+            <h1 style="font-family:'Outfit';font-size:3rem;font-weight:800;letter-spacing:0.05em;margin-bottom:15px;color:#3b82f6;">
+                THANK YOU</h1>
+            <p style="font-size:1.1rem;color:#94a3b8;font-weight:300;">로그와 지표로 문제를 추적하고, 다시 발생하지 않는 구조로 개선하는 개발자 안도형이었습니다.</p>
+            <div style="margin-top:35px;width:60px;height:2px;background:#3b82f6;margin-left:auto;margin-right:auto;"></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
