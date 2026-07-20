@@ -1,8 +1,6 @@
 # Portfolio
 
 - [포트폴리오 PDF 보기](./Dohyeong_Ahn_Portfolio.pdf)
-- [포트폴리오 HTML 보기](./index.html)
-
 ## Project Repositories
 
 - [ReBloom](https://github.com/dksehgud/ReBloom)
